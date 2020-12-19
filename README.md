@@ -6,7 +6,7 @@
 
   > > function hello(string : String)
 
-  2020.12.20
+2020.12.20
 
 - Basic types
   > > Number, String, Starks types...
