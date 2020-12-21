@@ -8,7 +8,7 @@ class Stark {
     }
 
     hello(person:string){
-        console.log("Hello"+person)
+        console.log("Hello "+person)
     }
 }
 
