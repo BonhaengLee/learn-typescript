@@ -9,7 +9,7 @@ class Stark {
 
     hello(person:string){
         console.log("Hello "+person)
-    }
+    }zsacazsc
 }
 
 var ned = new Stark();
