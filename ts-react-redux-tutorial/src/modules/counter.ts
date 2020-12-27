@@ -18,4 +18,29 @@ type CounterAction =
   | ReturnType<typeof decrease>
   | ReturnType<typeof increaseBy>;
 
-let a = "3";
+// 상태의 타입과 상태의 초깃값 선언하기
+// 리덕스의 상태의 타입을 선언할 때는 type or interface
+type CounterState = {
+  count: number;
+};
+
+const initialState: CounterState = {
+  count: 0
+};
+
+// 리듀서 작성하기, useReducer와 비슷하다.
+// 함수의 반환 타입에 상태의 타입을 넣는 것을 잊지 마라
+function counter(state: CounterState = initialState, action: CounterAction) {
+  switch (action.type) {
+    case INCREASE:
+      return { count: state.count + 1 };
+    case DECREASE:
+      return { count: state.count - 1 };
+    case INCREASE_BY:
+      return { count: state.count + action.payload };
+    default:
+      return state;
+  }
+}
+
+export default counter;
