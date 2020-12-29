@@ -8,20 +8,8 @@
       "DOM",
       "esnext"
     ],
-<<<<<<< HEAD
-    "allowJs": false,
-    "alwaysStrict": true,
-    "strictNullChecks": true,
-    "outDir": "lib",
-    "rootDir": "src",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "declaration": true,
-    "skipLibCheck": true,
-=======
     "allowJs": true,
     "checkJs": true,
->>>>>>> aab1e27cc8eb9cb3f21c2a558689a71e2cca05fd
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -30,6 +18,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "./",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node"
   },
   "include": [
     "src/**/*.ts"
