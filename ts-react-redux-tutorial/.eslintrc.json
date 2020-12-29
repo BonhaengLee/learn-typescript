@@ -1,4 +1,12 @@
 {
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
@@ -8,5 +16,10 @@
   },
   "rules": {
     "semi": 2
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
