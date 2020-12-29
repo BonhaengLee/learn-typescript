@@ -4,10 +4,7 @@
     "target": "es5",
     "module": "esnext",
     "strict": true,
-    "lib": [
-      "DOM",
-      "esnext"
-    ],
+    "lib": ["DOM", "esnext"],
     "allowJs": true,
     "checkJs": true,
     "allowSyntheticDefaultImports": true,
@@ -22,11 +19,6 @@
     "esModuleInterop": true,
     "moduleResolution": "node"
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts"]
 }
