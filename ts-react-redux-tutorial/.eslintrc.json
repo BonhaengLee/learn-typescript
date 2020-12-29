@@ -1,10 +1,99 @@
 {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "project": "./tsconfig.json"
+"env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "env": {
-      "node": true
-    },
-    "extends": ["plugin:@typescript-eslint/recommended"]
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "import",
+    "react",
+    "react-hooks",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "prettier/prettier": ["error", { "singleQuote": true, "parser": "flow" }],
+    "react/react-in-jsx-scope": 0,
+    "react/prefer-stateless-function": 0,
+    // "react/jsx-filename-extension": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "no-nested-ternary": 0,
+    "explicit-function-return-type": "off",
+    "react/button-has-type": "off",
+"no-use-before-define": "off",
+"import/extensions": [ "error", 
+  "ignorePackages", 
+  { "js": "never", 
+    "jsx": "never", 
+    "ts": "never", 
+    "tsx": "never", 
+    "json": "never" } ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".tsx"
+        ]
+      }
+    ],
+    "import/prefer-default-export": "off"
+  },
+  "settings": {
+    "react": { "version": "detect" },
+    "import/resolver": { "node": { "extensions": [".js", ".jsx", ".ts", ".tsx"] } },
+        "prettier/prettier": ["error", { "singleQuote": true, "parser": "flow" }]
   }
+
+}
+
+// {
+//   "extends": ["prettier"],
+//   "plugins": ["prettier"],
+//   "rules": {
+//    "prettier/prettier": ["error", { "singleQuote": true }],
+//     "react/button-has-type": "off",
+//     "explicit-function-return-type": "off",
+//     "no-use-before-define": "off",
+// "import/extensions": [
+//       "error",
+//       "ignorePackages",
+//       {
+//         "js": "never",
+//         "jsx": "never",
+//         "ts": "never",
+//         "tsx": "never"
+//       }
+//    ],
+
+//     "react/jsx-filename-extension": [
+//       1,
+//       {
+//         "extensions": [
+//           ".tsx"
+//         ]
+//       }
+//     ]
+//   },
+//     "settings": {
+//     "import/resolver": { "node": { "extensions": [".js", ".jsx", ".ts", ".tsx"] } }
+//   }
+// }
