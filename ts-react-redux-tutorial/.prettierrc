@@ -2,7 +2,13 @@
   "singleQuote": true,
   "semi": true,
   "useTabs": false,
+<<<<<<< HEAD
   "tabWidth": 2,
   "trailingComma": "all",
   "printWidth": 80
 }
+=======
+  "vueIndentScriptAndStyle": false
+  
+}
+>>>>>>> aab1e27cc8eb9cb3f21c2a558689a71e2cca05fd

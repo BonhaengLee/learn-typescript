@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 "env": {
     "browser": true,
     "es6": true
@@ -97,3 +98,17 @@
 //     "import/resolver": { "node": { "extensions": [".js", ".jsx", ".ts", ".tsx"] } }
 //   }
 // }
+=======
+  "parser": "babel-eslint",
+  "plugins": ["babel"],
+    "parserOptions": {
+      "project": "./tsconfig.json",
+      "tsconfigRootDir": "__dirname",
+      "sourceType": "module"
+    },
+    "env": {
+      "node": true
+    },
+    "extends": ["plugin:prettier/recommended", "prettier/@typescript-eslint"]
+  }
+>>>>>>> aab1e27cc8eb9cb3f21c2a558689a71e2cca05fd
