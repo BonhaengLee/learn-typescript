@@ -9,35 +9,29 @@ const TOGGLE_TODO = 'todos/TOGGLE_TODO' as const;
 const REMOVE_TODO = 'todos/REMOVE_TODO' as const;
 
 // NOTE: 액션 생성 함수
-export const addTodo = (
-  text: string
-): {
-  type: 'todos/ADD_TODO';
-  payload: string;
-} => ({
-  type: ADD_TODO,
-  payload: text,
-});
+// export const addTodo = (text: string) => ({
+//   type: ADD_TODO,
+//   payload: text,
+// });
 
-export const toggleTodo = (
-  id: number
-): {
-  type: 'todos/TOGGLE_TODO';
-  payload: number;
-} => ({
-  type: TOGGLE_TODO,
-  payload: id,
-});
+// export const toggleTodo = (id: number) => ({
+//   type: TOGGLE_TODO,
+//   payload: id,
+// });
 
-export const deleteTodo = (
-  id: number
-): {
-  type: 'todos/REMOVE_TODO';
-  payload: number;
-} => ({
-  type: REMOVE_TODO,
-  payload: id,
+// export const deleteTodo = (id: number) => ({
+//   type: REMOVE_TODO,
+//   payload: id,
+// });
+
+// NOTE: 액션 생성 함수 제네릭 타입 이용하기
+export const createReduxAction = <T>(typeName: string) => (payload: T) => ({
+  type: typeName,
+  payload,
 });
+export const addTodo = createReduxAction<string>(ADD_TODO);
+export const toggleTodo = createReduxAction<number>(TOGGLE_TODO);
+export const deleteTodo = createReduxAction<number>(REMOVE_TODO);
 
 // NOTE: 액션들의 타입스크립트 타입 준비
 type TodosAction =
@@ -49,7 +43,7 @@ type TodosAction =
 // ❤ : Todo 타입은 나중에 컴포넌트에서 불러와 사용하므로 export
 export type Todo = {
   id: number;
-  text: string;
+  text: string | number;
   done: boolean;
 };
 type TodosState = Todo[];
@@ -72,7 +66,7 @@ export default function todos(
       const nextId = Math.max(...state.map((todo) => todo.id)) + 1;
       return state.concat({
         id: nextId,
-        text: action.payload,
+        text: action.payload, // NOTE: 여기서 payload에 id:number가 들어오므로 type Todo의 text에 | number를 추가함
         done: false,
       });
     case TOGGLE_TODO:

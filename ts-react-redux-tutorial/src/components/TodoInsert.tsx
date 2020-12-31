@@ -1,15 +1,18 @@
 /*❤ : 새 항목을 등록할 수 있는 컴포넌트. 
 /❤ : 인풋의 상태는 useState로 로컬 상태로 관리 */
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import useAddTodo from '../hooks/useAddTodo';
 
-function TodoInsert(): JSX.Element {
+function TodoInsert() {
   const [value, setValue] = useState('');
-  const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const addTodo = useAddTodo();
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
-  const onSubmit = (e: FormEvent): void => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // TODO: 커스텀 훅 사용해서 새 항목 등록
+    addTodo(value); // TODO: 커스텀 훅 사용해서 새 항목 등록
     setValue('');
   };
 
