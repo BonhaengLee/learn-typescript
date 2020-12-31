@@ -3,17 +3,25 @@
 /❤ : 할 일 정보를 가지고 있는 todo를 props로 받아옴 
 /❤ : onToggle, onRemove 를 추후 TodoList에서 props로 넣어주는 방식으로 구현도 가능*/
 import React from 'react';
+import './TodoItem.css';
 import { Todo } from '../modules/todos';
+import useTodoActions from '../hooks/useTodoActions';
 
 type TodoItemProps = {
   todo: Todo;
 };
 
 function TodoItem({ todo }: TodoItemProps): JSX.Element {
+  const { onToggle, onRemove } = useTodoActions(todo.id);
+
   return (
     <li className={`TodoItem ${todo.done ? 'done' : ''}`}>
-      <span className="text">{todo.text}</span>
-      <span className="remove">(X)</span>
+      <span className="text" onClick={onToggle}>
+        {todo.text}
+      </span>
+      <span className="remove" onClick={onRemove}>
+        (X)
+      </span>
     </li>
   );
 }
