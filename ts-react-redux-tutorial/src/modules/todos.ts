@@ -24,8 +24,20 @@ const REMOVE_TODO = 'todos/REMOVE_TODO' as const;
 //   payload: id,
 // });
 
-// NOTE: 액션 생성 함수 제네릭 타입 이용하기
-export const createReduxAction = <T>(typeName: string) => (payload: T) => ({
+// NOTE: 액션 생성 함수 제네릭 타입 이용하기, return type 2개 명시
+export const createReduxAction = <T>(
+  typeName: string
+): ((
+  payload: T
+) => {
+  type: string;
+  payload: T;
+}) => (
+  payload: T
+): {
+  type: string;
+  payload: T;
+} => ({
   type: typeName,
   payload,
 });
@@ -46,7 +58,7 @@ export type Todo = {
   text: string | number;
   done: boolean;
 };
-type TodosState = Todo[];
+export type TodosState = Todo[];
 
 const initialState: TodosState = [
   { id: 1, text: '타입스크립트 배우기', done: true },

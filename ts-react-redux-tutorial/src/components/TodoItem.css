@@ -1,7 +1,7 @@
 .TodoItem .text {
   cursor: pointer;
 }
-
+/* 투두아이템의 done이 true면 className이 .TodoItem.done이 되어서 그 아래의 .text에 스타일이 지정됨 */
 .TodoItem.done .text {
   color: #999999;
   text-decoration: line-through;

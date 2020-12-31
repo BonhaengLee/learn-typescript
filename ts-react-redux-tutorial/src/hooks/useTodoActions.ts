@@ -1,9 +1,11 @@
 // ❤ : 할 일의 상태를 토글하는 함수와 할 일을 제거하는 함수를 제공해줌
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleTodo, deleteTodo } from '../modules/todos';
 
-export default function useTodoActions(id: number) {
+export default function useTodoActions(
+  id: number
+): { onToggle: () => void; onRemove: () => void } {
   const dispatch = useDispatch();
 
   const onToggle = useCallback(() => dispatch(toggleTodo(id)), [dispatch, id]); // NOTE: useCallback은 함수 재생성하지 않아 최적화됨

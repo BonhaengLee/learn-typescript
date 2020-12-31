@@ -3,14 +3,14 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import useAddTodo from '../hooks/useAddTodo';
 
-function TodoInsert() {
+function TodoInsert(): JSX.Element {
   const [value, setValue] = useState('');
   const addTodo = useAddTodo();
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = (e: FormEvent): void => {
     e.preventDefault();
     addTodo(value); // TODO: 커스텀 훅 사용해서 새 항목 등록
     setValue('');
