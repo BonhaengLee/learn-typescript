@@ -9,17 +9,32 @@ const TOGGLE_TODO = 'todos/TOGGLE_TODO' as const;
 const REMOVE_TODO = 'todos/REMOVE_TODO' as const;
 
 // NOTE: 액션 생성 함수
-export const addTodo = (text: string) => ({
+export const addTodo = (
+  text: string
+): {
+  type: 'todos/ADD_TODO';
+  payload: string;
+} => ({
   type: ADD_TODO,
   payload: text,
 });
 
-export const toggleTodo = (id: number) => ({
+export const toggleTodo = (
+  id: number
+): {
+  type: 'todos/TOGGLE_TODO';
+  payload: number;
+} => ({
   type: TOGGLE_TODO,
   payload: id,
 });
 
-export const deleteTodo = (id: number) => ({
+export const deleteTodo = (
+  id: number
+): {
+  type: 'todos/REMOVE_TODO';
+  payload: number;
+} => ({
   type: REMOVE_TODO,
   payload: id,
 });

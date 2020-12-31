@@ -6,9 +6,15 @@ const INCREASE_BY = 'counter/INCREASE_BY' as const;
 
 // NOTE: 액션 생성 함수 선언
 // return 생략할 수 있어서 화살표 함수 이용
-export const increase = () => ({ type: INCREASE });
-export const decrease = () => ({ type: DECREASE });
-export const increaseBy = (diff: number) => ({
+export const increase = (): { type: 'counter/INCREASE' } => ({
+  type: INCREASE,
+});
+export const decrease = (): { type: 'counter/DECREASE' } => ({
+  type: DECREASE,
+});
+export const increaseBy = (
+  diff: number
+): { type: 'counter/INCREASE_BY'; payload: number } => ({
   type: INCREASE_BY,
   payload: diff,
 });
@@ -32,7 +38,10 @@ const initialState: CounterState = {
 
 // NOTE: 리듀서 작성하기, useReducer와 비슷하다.
 // 함수의 반환 타입에 상태의 타입을 넣는 것을 잊지 마라
-function counter(state: CounterState = initialState, action: CounterAction) {
+function counter(
+  state: CounterState = initialState,
+  action: CounterAction
+): CounterState {
   switch (action.type) {
     case INCREASE:
       return { count: state.count + 1 };
