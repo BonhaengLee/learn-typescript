@@ -11,8 +11,9 @@ import TodoList from './components/TodoList';
 function App(): JSX.Element {
   return (
     <>
-      <TodoInsert />
-      <TodoList />
+      {/* <TodoInsert />
+      <TodoList /> */}
+      <Counter2 />
     </>
   );
 }
