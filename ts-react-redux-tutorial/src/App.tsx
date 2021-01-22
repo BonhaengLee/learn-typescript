@@ -1,6 +1,6 @@
 import React from 'react';
 // import CounterContainer from './containers/CounterContainer';
-import Counter2 from './components/Counter2';
+// import Counter2 from './components/Counter2';
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
 // ❤ : Hooks 이전에는 컨테이너 컴포넌트를 만들 때 connect() 함수를 통해
@@ -11,9 +11,9 @@ import TodoList from './components/TodoList';
 function App(): JSX.Element {
   return (
     <>
-      {/* <TodoInsert />
-      <TodoList /> */}
-      <Counter2 />
+      <TodoInsert />
+      <TodoList />
+      {/* <Counter2 /> */}
     </>
   );
 }

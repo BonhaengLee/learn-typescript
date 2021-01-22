@@ -3,9 +3,9 @@ interface Stark {
     age?: number;
 }
 
-function printName(stark:Stark) {
-    console.log(stark.name)
+function printName(stark: Stark) {
+    console.log(stark.name);
 }
 
-printName({name:"Eddard"})
-printName({name:"Joe"})
+printName({ name: "Eddard" });
+printName({ name: "Joe" });
