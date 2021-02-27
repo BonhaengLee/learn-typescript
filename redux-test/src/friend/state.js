@@ -1,4 +1,4 @@
-import createReducer from "./common/createReducer";
+import createReducer from "../common/createReducer";
 
 // @ : 액션 타입 정의
 const ADD = "friend/ADD";
@@ -11,7 +11,8 @@ export const removeFriend = (friend) => ({ type: REMOVE, friend });
 export const editFriend = (friend) => ({ type: EDIT, friend });
 
 // @ : 친구 데이터 추가, 삭제, 수정하는 리듀서 코드
-const INITIAL_STATE = { friend: [] };
+const INITIAL_STATE = { friends: [] };
+
 const reducer = createReducer(INITIAL_STATE, {
     [ADD]: (state, action) => state.friends.push(action.friend),
     [REMOVE]: (state, action) =>
@@ -23,7 +24,7 @@ const reducer = createReducer(INITIAL_STATE, {
             (friend) => friend.id === action.friend.id
         );
         if (index >= 0) {
-            state.friend[index] = action.friend;
+            state.friends[index] = action.friend;
         }
     },
 });
