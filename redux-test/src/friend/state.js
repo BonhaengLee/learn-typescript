@@ -33,9 +33,9 @@
 // export default reducer;
 
 // @ : 코드 리팩터링
-import createItemLogic from "../common/createItemLogic";
+import createItemsLogic from "../common/createItemsLogic";
 
-const { add, remove, edit, reducer } = createItemLogic("friends");
+const { add, remove, edit, reducer } = createItemsLogic("friends");
 export const addFriend = add;
 export const removeFriend = remove;
 export const editFriend = edit;

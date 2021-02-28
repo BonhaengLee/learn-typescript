@@ -39,12 +39,12 @@
 
 // @ : 코드 리팩터링
 import createReducer from "../common/createReducer";
-import createItemLogic from "../common/createItemLogic";
+import createItemsLogic from "../common/createItemsLogic";
 // @ : 공통 로직 사용
 import mergeReducers from "../common/mergeReducer";
 
 // @ : timelines이라는 이름으로 공통 로직 생성
-const { add, remove, edit, reducer: timelineReducer } = createItemLogic(
+const { add, remove, edit, reducer: timelineReducer } = createItemsLogic(
     "timelines"
 );
 
