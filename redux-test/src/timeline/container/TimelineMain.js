@@ -9,10 +9,22 @@ import TimelineList from "../component/TimelineList.js";
 export default function TimelineMain() {
     const [, forceUpdate] = useReducer((v) => v + 1, 0);
     useEffect(() => {
-        const unsubscribe = store.subscribe(() => forceUpdate());
-        // @ : 액션이 처리될 때마다 화면을 다시 그리기 위해 subscribe, 리덕스상태변경시 컴포넌트 렌더링 위해 forceUpdate
+        // @ : FriendMain 컴포넌트 개선 : 불필요하게 컴포넌트 함수 호출되지 않도록 상탯값 변경 여부 검사
+        // @ : 이전 상탯값 저장을 위한 변수
+        let prevTimelines = store.getState().timeline.timelines;
+        // @ : 상탯값이 변경될 경우에만 forceUpdate()
+        const unsubscribe = store.subscribe(() => {
+            const timelines = store.getState().timeline.timelines;
+            if (prevTimelines != timelines) {
+                forceUpdate();
+            }
+            prevTimelines = timelines;
+        });
         return () => unsubscribe();
-        // @ : 컴포넌트가 언마운트될때 subscribe에 등록한 이벤트 처리함수를 해제
+        // const unsubscribe = store.subscribe(() => forceUpdate());
+        // // @ : 액션이 처리될 때마다 화면을 다시 그리기 위해 subscribe, 리덕스상태변경시 컴포넌트 렌더링 위해 forceUpdate
+        // return () => unsubscribe();
+        // // @ : 컴포넌트가 언마운트될때 subscribe에 등록한 이벤트 처리함수를 해제
     }, []);
     function onAdd() {
         const timeline = getNextTimeline();
