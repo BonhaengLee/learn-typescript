@@ -40,7 +40,6 @@
 // store.dispatch(removeFriend({ id: 1, desc: "아이유" }));
 // // @ : 친구 목록을 테스트하기 위해 네개의 액션을 생성
 
-
 // import React from "react";
 // import ReactDOM from "react-dom";
 // import TimelineMain from "./timeline/container/TimelineMain";
@@ -59,15 +58,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import TimelineMain from "./timeline/container/TimelineMain";
 import FriendMain from "./friend/container/FriendMain";
-import store from './common/store';
-import { Provider } from 'react-redux';
+import store from "./common/store";
+import { Provider } from "react-redux";
 
 ReactDOM.render(
-    // @ : 1) 스토어 객체를 Provider 컴포넌트의 속성값으로 넣는다. Provider는 전달받은 스토어 객체의 subscribe 메서드를 호출해서 액션 처리가 끝날 때마다 알림을 받는다.
-    <Provider store={stroe}>
-<div>
-        <FriendMain />
-        <TimelineMain />
-    </div>    </Provider>,
+    // @ : 1) 스토어 객체를 Provider 컴포넌트의 속성값으로 넣는다.
+    // @ : Provider는 전달받은 스토어 객체의 subscribe 메서드를 호출해서 액션 처리가 끝날 때마다 알림을 받는다.
+    <Provider store={store}>
+        <div>
+            <FriendMain />
+            <TimelineMain />
+        </div>
+    </Provider>,
     document.getElementById("root")
 );
