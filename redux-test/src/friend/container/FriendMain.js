@@ -1,8 +1,8 @@
-import React, { useEffect, useReducer } from "react";
-import store from "../../common/store";
-import { getNextFriend } from "../../common/mockData";
-import { addFriend } from "../state";
-import FriendList from "../component/FriendList";
+// import React, { useEffect, useReducer } from "react";
+// import store from "../../common/store";
+// import { getNextFriend } from "../../common/mockData";
+// import { addFriend } from "../state";
+// import FriendList from "../component/FriendList";
 
 // export default function FriendMain() {
 //     const [, forceUpdate] = useReducer((v) => v + 1, 0);
@@ -60,7 +60,42 @@ import FriendList from "../component/FriendList";
 // }
 
 // @ : 코드 리팩토링2
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+// import { useSelector, useDispatch, shallowEqual } from "react-redux";
+// import NumberSelect from "../component/NumberSelect";
+// import { MAX_AGE_LIMIT, MAX_SHOW_LIMIT } from "../common";
+// import {
+//     getAgeLimit,
+//     getFriendsWithAgeLimit,
+//     getFriendsWithAgeShowLimit,
+//     getShowLimit,
+// } from "../state/selector";
+// import { creaeItemLogic } from "../common/createItemsLogic";
+
+// export default function FriendMain() {
+// const [
+//     ageLimit,
+//     showLimit,
+//     friendsWithAgeLimit,
+//     friendsWithAgeShowLimit,
+// ] = useSelector((state) => {
+//     const { friends, ageLimit, showLimit } = state.friend;
+//     // @ : 친구 목록에 연령 제한을 적용해서 새로운 목록을 만든다.
+//     const friendsWithAgeLimit = friends.filter(
+//         (friend) => friend.age <= ageLimit
+//     );
+//     return [
+//         ageLimit,
+//         showLimit,
+//         friendsWithAgeLimit,
+//         // @ : 연령 제한이 적용된 목록에 개수 제한을 적용해서 새로운 목록을 만든다.
+//         friendsWithAgeLimit.slice(0, showLimit),
+//     ];
+// }, shallowEqual);
+
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { getNextFriend } from "../../common/mockData";
+import FriendList from "../component/FriendList";
+import { addFriend, setAgeLimit, setShowLimit } from "../state";
 import NumberSelect from "../component/NumberSelect";
 import { MAX_AGE_LIMIT, MAX_SHOW_LIMIT } from "../common";
 import {
@@ -69,24 +104,26 @@ import {
     getFriendsWithAgeShowLimit,
     getShowLimit,
 } from "../state/selector";
-
-export default function FriendMain() {
+//FriendMain
+function FriendMain() {
     // const [
     //     ageLimit,
     //     showLimit,
     //     friendsWithAgeLimit,
     //     friendsWithAgeShowLimit,
     // ] = useSelector((state) => {
-    //     const { friends, ageLimit, showLimit } = state.friend;
-    //     // @ : 친구 목록에 연령 제한을 적용해서 새로운 목록을 만든다.
-    //     const friendsWithAgeLimit = friends.filter(
-    //         (friend) => friend.age <= ageLimit
+    //     //초기 ageLimit : 30
+    //     const { ageLimit, showLimit, friend } = state.friend;
+
+    //     //만약 ageLimit:30 보다 같거나 작으면 true 값 반환 즉, 30보다 밑인 애들만 반환
+    //     const friendsWithAgeLimit = friend.filter(
+    //         (item) => item.age <= ageLimit
     //     );
+
     //     return [
     //         ageLimit,
     //         showLimit,
     //         friendsWithAgeLimit,
-    //         // @ : 연령 제한이 적용된 목록에 개수 제한을 적용해서 새로운 목록을 만든다.
     //         friendsWithAgeLimit.slice(0, showLimit),
     //     ];
     // }, shallowEqual);
@@ -106,38 +143,79 @@ export default function FriendMain() {
     );
 
     const dispatch = useDispatch();
+
     function onAdd() {
-        const friend = getNextFriend();
-        dispatch(actions.addFriend(friend));
+        const friends = getNextFriend();
+        dispatch(addFriend(friends));
     }
+
+    console.log("FriendMain render");
 
     return (
         <div>
             <button onClick={onAdd}>친구 추가</button>
-            {/* 연령 제한 옵션, setAgeLimit 액션이 생성되고 리덕스의 상탯값이 변경된다. */}
+            <hr />
             <NumberSelect
-                onChange={(v) => dispatch(actions.setAgeLimit(v))}
+                onChange={(v) => {
+                    dispatch(setAgeLimit(v));
+                }}
                 value={ageLimit}
                 options={AGE_LIMIT_OPTIONS}
                 postfix="세 이하만 보기"
             />
-            {/* 연령 제한으로 필터링된 친구 목록을 보여줌 */}
             <FriendList friends={friendsWithAgeLimit} />
-            {/* 개수 제한 옵션, setShowLimit 액션이 생성되고, 리덕스의 상탯값이 변경됨 */}
+
             <NumberSelect
-                onChange={(v) => dispatch(actions.setShowLimit(v))}
+                onChange={(v) => {
+                    dispatch(setShowLimit(v));
+                }}
                 value={showLimit}
                 options={SHOW_LIMIT_OPTIONS}
                 postfix="명 이하만 보기(연령 제한 적용)"
             />
-            {/* 연령 제한과 개수 제한이 모두 적용된 친구 목록을 보여줌 */}
             <FriendList friends={friendsWithAgeShowLimit} />
         </div>
     );
 }
-// @ : 연령 제한과 개수 제한을 위한 옵션 목록
+
 const AGE_LIMIT_OPTIONS = [15, 20, 25, MAX_AGE_LIMIT];
 const SHOW_LIMIT_OPTIONS = [2, 4, 6, MAX_SHOW_LIMIT];
+
+export default FriendMain;
+
+//     const dispatch = useDispatch();
+//     function onAdd() {
+//         const friend = getNextFriend();
+//         dispatch(actions.addFriend(friend));
+//     }
+
+//     return (
+//         <div>
+//             <button onClick={onAdd}>친구 추가</button>
+//             {/* 연령 제한 옵션, setAgeLimit 액션이 생성되고 리덕스의 상탯값이 변경된다. */}
+//             <NumberSelect
+//                 onChange={(v) => dispatch(actions.setAgeLimit(v))}
+//                 value={ageLimit}
+//                 options={AGE_LIMIT_OPTIONS}
+//                 postfix="세 이하만 보기"
+//             />
+//             {/* 연령 제한으로 필터링된 친구 목록을 보여줌 */}
+//             <FriendList friends={friendsWithAgeLimit} />
+//             {/* 개수 제한 옵션, setShowLimit 액션이 생성되고, 리덕스의 상탯값이 변경됨 */}
+//             <NumberSelect
+//                 onChange={(v) => dispatch(actions.setShowLimit(v))}
+//                 value={showLimit}
+//                 options={SHOW_LIMIT_OPTIONS}
+//                 postfix="명 이하만 보기(연령 제한 적용)"
+//             />
+//             {/* 연령 제한과 개수 제한이 모두 적용된 친구 목록을 보여줌 */}
+//             <FriendList friends={friendsWithAgeShowLimit} />
+//         </div>
+//     );
+// }
+// // @ : 연령 제한과 개수 제한을 위한 옵션 목록
+// const AGE_LIMIT_OPTIONS = [15, 20, 25, MAX_AGE_LIMIT];
+// const SHOW_LIMIT_OPTIONS = [2, 4, 6, MAX_SHOW_LIMIT];
 
 // // @ : useSelector 훅에 선택자 함수만 입력하는 방식
 // export default function FriendMain() {
