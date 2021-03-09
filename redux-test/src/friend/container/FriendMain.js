@@ -103,6 +103,7 @@ import {
     getFriendsWithAgeLimit,
     getFriendsWithAgeShowLimit,
     getShowLimit,
+    makeGetFriendsWithAgeLimit,
 } from "../state/selector";
 import { useMemo } from "react";
 //FriendMain
@@ -132,7 +133,8 @@ import { useMemo } from "react";
 // @ : ageLimit을 속성값으로 받음
 export default function FriendMain({ ageLimit }) {
     // @ : 독립된 메모이제이션 적용, makeGet~함수로 getFriendswithAgeLimit함수를 생성, useMemo로 getFriend~의 참조값이 변경되지 않도록 한다.
-    // @ : 결과적으로 각 컴포넌트 인스턴스는 각자의 getFriendsWithAgeLimit함수를 확보한다.    const getFriendsWithAgeLimit = useMemo(makeGetFriendsWithAgeLimit, []);
+    // @ : 결과적으로 각 컴포넌트 인스턴스는 각자의 getFriendsWithAgeLimit함수를 확보한다.    
+    const getFriendsWithAgeLimit = useMemo(makeGetFriendsWithAgeLimit, []);
     const friendsWithAgeLimit = useSelector((state) =>
         // @ : 선택자 함수의 인수로 상탯값과 속성값을 모두 넘긴다.
         getFriendsWithAgeLimit(state, ageLimit)
