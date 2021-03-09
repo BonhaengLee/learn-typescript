@@ -104,43 +104,53 @@ import {
     getFriendsWithAgeShowLimit,
     getShowLimit,
 } from "../state/selector";
+import { useMemo } from "react";
 //FriendMain
-function FriendMain() {
+// function FriendMain() {
+// const [
+//     ageLimit,
+//     showLimit,
+//     friendsWithAgeLimit,
+//     friendsWithAgeShowLimit,
+// ] = useSelector((state) => {
+//     //초기 ageLimit : 30
+//     const { ageLimit, showLimit, friend } = state.friend;
+
+//     //만약 ageLimit:30 보다 같거나 작으면 true 값 반환 즉, 30보다 밑인 애들만 반환
+//     const friendsWithAgeLimit = friend.filter(
+//         (item) => item.age <= ageLimit
+//     );
+
+//     return [
+//         ageLimit,
+//         showLimit,
+//         friendsWithAgeLimit,
+//         friendsWithAgeLimit.slice(0, showLimit),
+//     ];
+// }, shallowEqual);
+
+// @ : ageLimit을 속성값으로 받음
+export default function FriendMain({ ageLimit }) {
+    // @ : 독립된 메모이제이션 적용, makeGet~함수로 getFriendswithAgeLimit함수를 생성, useMemo로 getFriend~의 참조값이 변경되지 않도록 한다.
+    // @ : 결과적으로 각 컴포넌트 인스턴스는 각자의 getFriendsWithAgeLimit함수를 확보한다.    const getFriendsWithAgeLimit = useMemo(makeGetFriendsWithAgeLimit, []);
+    const friendsWithAgeLimit = useSelector((state) =>
+        // @ : 선택자 함수의 인수로 상탯값과 속성값을 모두 넘긴다.
+        getFriendsWithAgeLimit(state, ageLimit)
+    );
     // const [
     //     ageLimit,
     //     showLimit,
-    //     friendsWithAgeLimit,
+    //     // friendsWithAgeLimit,
     //     friendsWithAgeShowLimit,
-    // ] = useSelector((state) => {
-    //     //초기 ageLimit : 30
-    //     const { ageLimit, showLimit, friend } = state.friend;
-
-    //     //만약 ageLimit:30 보다 같거나 작으면 true 값 반환 즉, 30보다 밑인 애들만 반환
-    //     const friendsWithAgeLimit = friend.filter(
-    //         (item) => item.age <= ageLimit
-    //     );
-
-    //     return [
-    //         ageLimit,
-    //         showLimit,
-    //         friendsWithAgeLimit,
-    //         friendsWithAgeLimit.slice(0, showLimit),
-    //     ];
-    // }, shallowEqual);
-    const [
-        ageLimit,
-        showLimit,
-        friendsWithAgeLimit,
-        friendsWithAgeShowLimit,
-    ] = useSelector(
-        (state) => [
-            getAgeLimit(state),
-            getShowLimit(state),
-            getFriendsWithAgeLimit(state),
-            getFriendsWithAgeShowLimit(state),
-        ],
-        shallowEqual
-    );
+    // ] = useSelector(
+    //     (state) => [
+    //         getAgeLimit(state),
+    //         getShowLimit(state),
+    //         getFriendsWithAgeLimit(state),
+    //         getFriendsWithAgeShowLimit(state),
+    //     ],
+    //     shallowEqual
+    // );
 
     const dispatch = useDispatch();
 
@@ -151,37 +161,43 @@ function FriendMain() {
 
     console.log("FriendMain render");
 
+    // return (
+    //     <div>
+    //         <button onClick={onAdd}>친구 추가</button>
+    //         <hr />
+    //         <NumberSelect
+    //             onChange={(v) => {
+    //                 dispatch(setAgeLimit(v));
+    //             }}
+    //             value={ageLimit}
+    //             options={AGE_LIMIT_OPTIONS}
+    //             postfix="세 이하만 보기"
+    //         />
+    //         <FriendList friends={friendsWithAgeLimit} />
+
+    //         <NumberSelect
+    //             onChange={(v) => {
+    //                 dispatch(setShowLimit(v));
+    //             }}
+    //             value={showLimit}
+    //             options={SHOW_LIMIT_OPTIONS}
+    //             postfix="명 이하만 보기(연령 제한 적용)"
+    //         />
+    //         <FriendList friends={friendsWithAgeShowLimit} />
+    //     </div>
+    // );
     return (
         <div>
             <button onClick={onAdd}>친구 추가</button>
-            <hr />
-            <NumberSelect
-                onChange={(v) => {
-                    dispatch(setAgeLimit(v));
-                }}
-                value={ageLimit}
-                options={AGE_LIMIT_OPTIONS}
-                postfix="세 이하만 보기"
-            />
             <FriendList friends={friendsWithAgeLimit} />
-
-            <NumberSelect
-                onChange={(v) => {
-                    dispatch(setShowLimit(v));
-                }}
-                value={showLimit}
-                options={SHOW_LIMIT_OPTIONS}
-                postfix="명 이하만 보기(연령 제한 적용)"
-            />
-            <FriendList friends={friendsWithAgeShowLimit} />
         </div>
     );
 }
 
-const AGE_LIMIT_OPTIONS = [15, 20, 25, MAX_AGE_LIMIT];
-const SHOW_LIMIT_OPTIONS = [2, 4, 6, MAX_SHOW_LIMIT];
+// const AGE_LIMIT_OPTIONS = [15, 20, 25, MAX_AGE_LIMIT];
+// const SHOW_LIMIT_OPTIONS = [2, 4, 6, MAX_SHOW_LIMIT];
 
-export default FriendMain;
+// export default FriendMain;
 
 //     const dispatch = useDispatch();
 //     function onAdd() {

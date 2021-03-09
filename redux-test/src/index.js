@@ -66,8 +66,9 @@ ReactDOM.render(
     // @ : Provider는 전달받은 스토어 객체의 subscribe 메서드를 호출해서 액션 처리가 끝날 때마다 알림을 받는다.
     <Provider store={store}>
         <div>
-            <FriendMain />
-            <TimelineMain />
+            // @ : FriendMain 인스턴스 2개
+            <FriendMain ageLimit={30}/>
+            <TimelineMain ageLimit={15}/>
         </div>
     </Provider>,
     document.getElementById("root")
