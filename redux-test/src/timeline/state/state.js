@@ -38,17 +38,58 @@
 // export default reducer;
 
 // @ : 코드 리팩터링
-import createReducer from "../common/createReducer";
-import createItemsLogic from "../common/createItemsLogic";
+import createReducer from "../../common/createReducer";
+import createItemsLogic from "../../common/createItemsLogic";
 // @ : 공통 로직 사용
-import mergeReducers from "../common/mergeReducer";
+import mergeReducers from "../../common/mergeReducer";
 
 // @ : timelines이라는 이름으로 공통 로직 생성
 const { add, remove, edit, reducer: timelineReducer } = createItemsLogic(
     "timelines"
 );
 
-// @ : 공통 로직에 포함되지 않은 액션타입, 액션생성자함수, 리듀서코드정의
+export const types = {
+    INCREASE_NEXT_PAGE: "timeline/INCREASE_NEXT_PAGE",
+    REQUEST_LIKE: "timeline/REQUEST_LIKE",
+    ADD_LIKE: "timeline/ADD_LIKE",
+    SET_LOADING: "timeline/SET_LOADING",
+};
+
+export const actions = {
+    addTimeline: add,
+    removeTimeline: remove,
+    editTimeline: edit,
+    increaseNextPage: () => ({
+        type: types.INCREASE_NEXT_PAGE,
+    }),
+    requestLike: (timeline) => ({ type: types.REQUEST_LIKE, timeline }),
+    addLike: (timelineId, value) => ({
+        type: types.ADD_LIKE,
+        timelineId,
+        value,
+    }),
+    setLoading: (isLoading) => ({
+        type: types.SET_LOADING,
+        isLoading,
+    }),
+};
+
+const INITIAL_STATE = { nextPage: 0, isLoading: false };
+const reducer = createReducer(INITIAL_STATE, {
+    [types.INCREASE_NEXT_PAGE]: (state, action) => (state.nextPage += 1),
+    [types.ADD_LIKE]: (state, action) => {
+        const timeline = state.timelines.find(
+            (item) => item.id === action.timelineId
+        );
+        if (timeline) {
+            timeline.likes += action.value;
+        }
+    },
+    [types.SET_LOADING]: (state, action) =>
+        (state.isLoading = action.isLoading),
+});
+
+// @ : 이전) 공통 로직에 포함되지 않은 액션타입, 액션생성자함수, 리듀서코드정의
 const INCREASE_NEXT_PAGE = "timeline/INCREASE_NEXT_PAGE";
 
 export const addTimeline = add;
@@ -56,10 +97,10 @@ export const removeTimeline = remove;
 export const editTimeline = edit;
 export const increaseNextPage = () => ({ type: INCREASE_NEXT_PAGE });
 
-const INITIAL_STATE = { nextPage: 0 };
-const reducer = createReducer(INITIAL_STATE, {
-    [INCREASE_NEXT_PAGE]: (state, action) => (state.nextPage += 1),
-});
+// const INITIAL_STATE = { nextPage: 0 };
+// const reducer = createReducer(INITIAL_STATE, {
+//     [INCREASE_NEXT_PAGE]: (state, action) => (state.nextPage += 1),
+// });
 
 // @ : mergeReducers 함수로 공통로직 리듀서함수와 직접작성 리듀서함수를 합침
 const reducers = [reducer, timelineReducer];
