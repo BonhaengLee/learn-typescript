@@ -6,6 +6,7 @@ import { addTimeline } from "../state";
 // @ : 타임라인 데이터를 추가하기 위한 액션 생성자 함수
 import TimelineList from "../component/TimelineList.js";
 import { actions } from "../state";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function TimelineMain() {
     const dispatch = useDispatch();
@@ -44,7 +45,7 @@ export default function TimelineMain() {
     }
     // console.log("TimelineMain render");
     // // @ : 렌더링 시점 확인
-    // const timelines = store.getState().timeline.timelines;
+    // const timelines = store.getState().timeline.timelin  `       es;
     // @ : 스토어에서 타임라인 배열 가져옴
     return (
         <div>
