@@ -1,4 +1,4 @@
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import timelineReducer from "../timeline/state";
 import friendReducer from "../friend/state";
 import createSagaMiddleware from 'redux-saga'
