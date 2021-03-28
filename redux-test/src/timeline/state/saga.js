@@ -9,12 +9,29 @@ export function* fetchData(action) {
     while (true) {
         // take는 인수로 전달된 액션 타입을 기다린다. RL 액션 발생 시 다음 줄 실행된다. yield take는 액션 객체를 반환한다. RL 객체에는 timeline 객체가 들어 있다.
         const { timeline } = yield take(types.REQUEST_LIKE);
+
         // put 함수는 새로운 액션 발생, 결과적으로 store.dispatch 메서드를 호출하는 효과가 있다.
         yield put(actions.setLoading(true));
+
         // put 함수로 좋아요 숫자를 증가시키는 액션을 발생시킴
         yield put(actions.addLike(timeline.id, 1));
-        // call 함수는 입력된 함수를 대신 호출해줌, 프로미스를 반환 시 프로미스가 처리됨 상태가 될 때까지(서버로부터 응답이 올 때까지) 기다림
-        yield call(callApiLike);
+
+        // 에러 발생 시 에러 정보를 리덕스에 저장
+        // @ : 새로운 좋아요 요청이 들어오면 이전 에러 정보를 초기화한다.
+        yield put(actions.setError(""));
+
+        try {
+            // call 함수는 입력된 함수를 대신 호출해줌, 프로미스를 반환 시 프로미스가 처리됨 상태가 될 때까지(서버로부터 응답이 올 때까지) 기다림
+            // @ : callApiLike에서 프로미스 객체를 거부됨 상태로 만드는 경우를 처리하기 위해 try catch 사용
+            yield call(callApiLike);
+        } catch (error) {
+            // @ : 프로미스 객체가 거부됨 상태가 되면 에러 객체를 저장하는 액션을 발생시킨다.
+            yield put(actions.setError(error));
+
+            // @ : 미리 증가시켰던 좋아요 숫자를 감소시키는 액션을 발생시킨다.
+            yield put(actions.addLike(timeline.id, -1));
+        }
+
         // 로딩이 끝났단 것을 알리는 액션을 발생, 하나의 RL 액션 처리가 끝나고 새로운 RL 액션이 발생할 때까지 기다림
         yield put(actions.setLoading(false));
     }
