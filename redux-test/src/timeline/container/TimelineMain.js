@@ -15,6 +15,16 @@ export default function TimelineMain() {
 
     const error = useSelector((state) => state.timeline.error); // 리덕스 상탯값으로부터 에러 값을 가져온다.
 
+    const text = useSelector((state) => state.timeline.text);
+    // 현재 입력 중인 문자열을 상탯값에 저장
+    const [currentText, setCurrentText] = useState("");
+    function onChangeText(e) {
+        const text = e.target.value;
+        // 문자열을 입력할 때마다 액션 발생시킴
+        dispatch(actions.trySetText(text));
+        setCurrentText(text);
+    }
+
     const [, forceUpdate] = useReducer((v) => v + 1, 0);
     useEffect(() => {
         // @ : FriendMain 컴포넌트 개선 : 불필요하게 컴포넌트 함수 호출되지 않도록 상탯값 변경 여부 검사
@@ -49,12 +59,15 @@ export default function TimelineMain() {
     // // @ : 렌더링 시점 확인
     // const timelines = store.getState().timeline.timelin  `       es;
     // @ : 스토어에서 타임라인 배열 가져옴
+
     return (
         <div>
             <button onClick={onAdd}>타임라인 추가</button>
             <TimelineList timelines={timelines} onLike={onLike} />
             {!!isLoading && <p>전송중...</p>}
             {!!error && <p>에러 발생: {error}</p>}
+            <input type="text" value={currentText} onChange={onChangeText} />
+            {!!text && <p>{text}</p>}
         </div>
     );
 }

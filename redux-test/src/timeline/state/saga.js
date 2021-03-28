@@ -1,8 +1,8 @@
 // 부수 효과 발생시킬 때 사용하는 함수
 import { all, call, put, take, fork } from "redux-saga/effects";
-import { actions, types } from "./index";
 // 좋아요 이벤트를 서버로 전송하는 비동기 함수
 import { callApiLike } from "../../common/api";
+import { actions, types } from "..";
 
 // REQUEST_LIKE 액션을 처리하는 제네레이터 함수=사가함수
 export function* fetchData(action) {
@@ -44,3 +44,13 @@ export default function* watcher() {
 
 // take, put, call 은 해야 할 일을 설명하는 js 객체이므로 put 함수는 store.dispatch 메서드가 즉시 실행되지 않음.
 // 반환된 객체는 사가 미들웨어에 전달, 사가 미들웨어는 일을 하고 결과와 함께 실행 흐름을 작성한 함수로 넘긴다. 이를 반복하면서 함수와 사가 미들웨어가 협업한다.
+
+export function* trySetText(action) {
+    const { text } = action;
+    yield put(actions.setText(text));
+}
+
+export default function* watcher() {
+    // 액션이 발생하고 0.5초 동안 재발생하지 않으면 trySetText 사가 함수를 실행한다.
+    yield all([fork(fetchData), debounce(500, types.TRY_SET_TEXT, trySetText)]);
+}
