@@ -1,6 +1,4 @@
 import { Grid } from "semantic-ui-react";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import styles from "./itemList.module.css";
 import Link from "next/link";
 
@@ -11,7 +9,8 @@ export default function ItemList({ list }) {
                 <Grid.Row>
                     {list.map((item) => (
                         <Grid.Column key={item.id}>
-                            <Link href={`/view/${item.id}`}>
+                            <a href={`/view/${item.id}`}>ddd</a>
+                            <Link href="/view/[id]" as={`/view/${item.id}`}>
                                 <a>
                                     <div className={styles.wrap}>
                                         <img
@@ -38,3 +37,5 @@ export default function ItemList({ list }) {
         </div>
     );
 }
+
+// @ : next/link > Link에서 a tag를 사용하는 이유 : a태그를 더 넣은 이유는 a태그를 사용하지 않았을때 검색엔진에서 링크를 못 찾을수도
