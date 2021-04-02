@@ -1,15 +1,13 @@
-import React from "react";
-import { Menu } from "semantic-ui-react";
 import { useRouter } from "next/router";
+import { Menu } from "semantic-ui-react";
 
 export default function Gnb() {
     const router = useRouter();
-    console.log(router);
     let activeItem;
 
     if (router.pathname === "/") {
         activeItem = "home";
-    } else if ((router.pathname = "/about")) {
+    } else if (router.pathname === "/about") {
         activeItem = "about";
     }
 
@@ -17,8 +15,7 @@ export default function Gnb() {
         if (data.name === "home") {
             router.push("/");
         } else if (data.name === "about") {
-            // router.push("/about");
-            location.href = "/about";
+            router.push("/about");
         }
     }
 
@@ -35,7 +32,7 @@ export default function Gnb() {
                 onClick={goLink}
             />
             <Menu.Item
-                name="contact Us"
+                name="Contact Us"
                 active={activeItem === "contact"}
                 onClick={() => {
                     router.push("/contact");
