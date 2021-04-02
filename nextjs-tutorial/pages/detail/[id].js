@@ -45,7 +45,7 @@ export async function getStaticPaths() {
         //     { params: { id: "730" } },
         //     { params: { id: "729" } },
         // ],
-        paths: data.map((item) => ({
+        paths: data.slice(0, 9).map((item) => ({
             params: {
                 id: item.id.toString(),
             },
