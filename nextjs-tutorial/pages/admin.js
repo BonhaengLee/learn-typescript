@@ -7,6 +7,7 @@ export default function Admin() {
     const router = useRouter();
     const [isLogin, setIsLogin] = useState(false);
 
+    // admin 이동 시 /api/isLogin에 로그인 상태인지 확인 후 아니면 /login 으로 이동
     function checkLogin() {
         axios.get("/api/isLogin").then((res) => {
             if (res.status === 200 && res.data.name) {

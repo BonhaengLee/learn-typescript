@@ -4,6 +4,7 @@ import { Button, Form } from "semantic-ui-react";
 
 export default function Login() {
     const router = useRouter();
+
     function login() {
         Axios.post("/api/login").then((res) => {
             if (res.status === 200) {
@@ -12,6 +13,7 @@ export default function Login() {
             }
         });
     }
+    
     return (
         <div style={{ padding: "100px 0", textAlign: "center" }}>
             <Form>
