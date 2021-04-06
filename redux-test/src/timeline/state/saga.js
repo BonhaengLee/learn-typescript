@@ -23,6 +23,7 @@ export function* fetchData(action) {
         try {
             // call 함수는 입력된 함수를 대신 호출해줌, 프로미스를 반환 시 프로미스가 처리됨 상태가 될 때까지(서버로부터 응답이 올 때까지) 기다림
             // @ : callApiLike에서 프로미스 객체를 거부됨 상태로 만드는 경우를 처리하기 위해 try catch 사용
+            // @ : call은 프로미스를 반환하는 함수들만을 위한 것이 아닙니다. call은 제너레이터 함수들을 실행하는 데에도 사용할 수 있습니다.
             yield call(callApiLike);
         } catch (error) {
             // @ : 프로미스 객체가 거부됨 상태가 되면 에러 객체를 저장하는 액션을 발생시킨다.
